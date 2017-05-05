@@ -1,12 +1,17 @@
 import React ,{ Component } from 'react';
+
+import Input from './Input';
 import PlayerList from './PlayerList';
+
+var idCounter = 3;
 
 class App extends React.Component {
   
   constructor() {
     super();
     this.state = {
-      players: []
+      players: [],
+      value: ""
     }
   }
   
@@ -17,17 +22,56 @@ class App extends React.Component {
         this.setState({
           players: responseData
         });
-      });
+    });
   }
   
+  onChange(e) {
+    this.setState({
+      value: e.target.value
+    })
+  }
+  
+  onSelect(index) {
+    let players = [
+      ...this.state.players.slice(0, index),
+      ...this.state.players.slice(index + 1)
+    ];
+    this.setState({
+      players: players
+    });
+  }
+
+  onAdd() {
+    idCounter += 1;
+    let player = {
+      id: idCounter,
+      name: this.state.value
+    }
+    
+    let players = [...this.state.players, player];
+
+    this.setState({
+      players: players,
+      value: ""
+    });
+  }
+
   render() {
     return(
       <div>
-      <h1>Hello React Rock again</h1>
-        <PlayerList data={ this.state.players }/>
+      <h1>React - Todo</h1>
+        <Input 
+          onChange={ this.onChange.bind(this) } 
+          onAdd={ this.onAdd.bind(this) } 
+          value={this.state.value} />
+        <PlayerList 
+          onSelect={ this.onSelect.bind(this) } 
+          data={ this.state.players }/>
       </div>
     );
   }
 }
 
 export default App;
+
+{/*<PlayerList onSelect={ this.onSelect.bind(this) } data={ this.state.players }/>*/}
