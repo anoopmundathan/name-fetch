@@ -5,7 +5,7 @@ import PlayerList from './PlayerList';
 
 var idCounter = 3;
 
-class App extends React.Component {
+class App extends Component {
   
   constructor() {
     super();
@@ -59,7 +59,7 @@ class App extends React.Component {
   render() {
     return(
       <div>
-      <h1>React - Todo</h1>
+      <h1>React fetch Example</h1>
         <Input 
           onChange={ this.onChange.bind(this) } 
           onAdd={ this.onAdd.bind(this) } 
